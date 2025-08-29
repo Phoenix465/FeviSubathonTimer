@@ -11,5 +11,6 @@ i = 0
 while True:
     sleep(0.05)
     i += 1
-    cl.set_input_settings("Points", {"text": str(i)}, True)
+    cl.set_input_settings("FeviSubathonTimer-Points", {"text": str(i)}, True)
+    cl.set_input_settings("FeviSubathonTimer-Timer", {"text": f"00:00:{i}"}, True)
 
