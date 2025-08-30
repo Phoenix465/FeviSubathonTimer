@@ -1,0 +1,23 @@
+{
+    "version": "1.0.0",
+    "contribution_map_seconds": {
+        "__info": "All values are in seconds with points being allocated per 180 seconds (3 minutes)",
+        "twitch_t1": 180,
+        "twitch_t2": 300,
+        "twitch_t3": 750,
+        "twitch_bits": 0.9,
+
+        "stream_elements_USD": 60,
+
+        "youtube_membership_t1": 120,
+        "youtube_membership_t2": 240,
+        "youtube_membership_t3": 900,
+        "youtube_superchat_USD": 60,
+
+        "afreeca": 2,
+        "chzzk": 0.1,
+
+        "system_adjustment_points": 180,
+        "system_adjustment_seconds": 1
+    }
+}

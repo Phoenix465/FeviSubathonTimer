@@ -45,6 +45,7 @@
   --bs-youtube-member-T2: #CC0000;
   --bs-youtube-member-T3: #990000;
   --bs-youtube-superchat: #bd0145;
+  --bs-cyan: #17a2b8;
   --bs-primary-rgb: 13, 110, 253;
   --bs-secondary-rgb: 108, 117, 125;
   --bs-success-rgb: 25, 135, 84;
@@ -61,6 +62,7 @@
   --bs-youtube-member-T2-rgb: 204, 0, 0;
   --bs-youtube-member-T3-rgb: 153, 0, 0;
   --bs-youtube-superchat-rgb: 189, 1, 69;
+  --bs-cyan-rgb: 23, 162, 184;
   --bs-primary-text-emphasis: rgb(5.2, 44, 101.2);
   --bs-secondary-text-emphasis: rgb(43.2, 46.8, 50);
   --bs-success-text-emphasis: rgb(10, 54, 33.6);
@@ -3256,6 +3258,23 @@ textarea.form-control-lg {
   --bs-btn-disabled-border-color: #bd0145;
 }
 
+.btn-cyan {
+  --bs-btn-color: #000;
+  --bs-btn-bg: #17a2b8;
+  --bs-btn-border-color: #17a2b8;
+  --bs-btn-hover-color: #000;
+  --bs-btn-hover-bg: rgb(57.8, 175.95, 194.65);
+  --bs-btn-hover-border-color: rgb(46.2, 171.3, 191.1);
+  --bs-btn-focus-shadow-rgb: 20, 138, 156;
+  --bs-btn-active-color: #000;
+  --bs-btn-active-bg: rgb(69.4, 180.6, 198.2);
+  --bs-btn-active-border-color: rgb(46.2, 171.3, 191.1);
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #000;
+  --bs-btn-disabled-bg: #17a2b8;
+  --bs-btn-disabled-border-color: #17a2b8;
+}
+
 .btn-outline-primary {
   --bs-btn-color: #0d6efd;
   --bs-btn-border-color: #0d6efd;
@@ -3525,6 +3544,23 @@ textarea.form-control-lg {
   --bs-btn-disabled-color: #bd0145;
   --bs-btn-disabled-bg: transparent;
   --bs-btn-disabled-border-color: #bd0145;
+  --bs-gradient: none;
+}
+
+.btn-outline-cyan {
+  --bs-btn-color: #17a2b8;
+  --bs-btn-border-color: #17a2b8;
+  --bs-btn-hover-color: #000;
+  --bs-btn-hover-bg: #17a2b8;
+  --bs-btn-hover-border-color: #17a2b8;
+  --bs-btn-focus-shadow-rgb: 23, 162, 184;
+  --bs-btn-active-color: #000;
+  --bs-btn-active-bg: #17a2b8;
+  --bs-btn-active-border-color: #17a2b8;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #17a2b8;
+  --bs-btn-disabled-bg: transparent;
+  --bs-btn-disabled-border-color: #17a2b8;
   --bs-gradient: none;
 }
 
@@ -4582,7 +4618,7 @@ textarea.form-control-lg {
 }
 
 .card {
-  --bs-card-spacer-y: 0.5rem;
+  --bs-card-spacer-y: 1rem;
   --bs-card-spacer-x: 1rem;
   --bs-card-title-spacer-y: 0.5rem;
   --bs-card-title-color: ;
@@ -5209,6 +5245,13 @@ textarea.form-control-lg {
   --bs-alert-link-color: var(--bs-youtube-superchat-text-emphasis);
 }
 
+.alert-cyan {
+  --bs-alert-color: var(--bs-cyan-text-emphasis);
+  --bs-alert-bg: var(--bs-cyan-bg-subtle);
+  --bs-alert-border-color: var(--bs-cyan-border-subtle);
+  --bs-alert-link-color: var(--bs-cyan-text-emphasis);
+}
+
 @keyframes progress-bar-stripes {
   0% {
     background-position-x: var(--bs-progress-height);
@@ -5716,6 +5759,19 @@ textarea.form-control-lg {
   --bs-list-group-active-color: var(--bs-youtube-superchat-bg-subtle);
   --bs-list-group-active-bg: var(--bs-youtube-superchat-text-emphasis);
   --bs-list-group-active-border-color: var(--bs-youtube-superchat-text-emphasis);
+}
+
+.list-group-item-cyan {
+  --bs-list-group-color: var(--bs-cyan-text-emphasis);
+  --bs-list-group-bg: var(--bs-cyan-bg-subtle);
+  --bs-list-group-border-color: var(--bs-cyan-border-subtle);
+  --bs-list-group-action-hover-color: var(--bs-emphasis-color);
+  --bs-list-group-action-hover-bg: var(--bs-cyan-border-subtle);
+  --bs-list-group-action-active-color: var(--bs-emphasis-color);
+  --bs-list-group-action-active-bg: var(--bs-cyan-border-subtle);
+  --bs-list-group-active-color: var(--bs-cyan-bg-subtle);
+  --bs-list-group-active-bg: var(--bs-cyan-text-emphasis);
+  --bs-list-group-active-border-color: var(--bs-cyan-text-emphasis);
 }
 
 .btn-close {
@@ -7285,6 +7341,11 @@ textarea.form-control-lg {
   background-color: RGBA(var(--bs-youtube-superchat-rgb), var(--bs-bg-opacity, 1)) !important;
 }
 
+.text-bg-cyan {
+  color: #000 !important;
+  background-color: RGBA(var(--bs-cyan-rgb), var(--bs-bg-opacity, 1)) !important;
+}
+
 .link-primary {
   color: RGBA(var(--bs-primary-rgb), var(--bs-link-opacity, 1)) !important;
   text-decoration-color: RGBA(var(--bs-primary-rgb), var(--bs-link-underline-opacity, 1)) !important;
@@ -7427,6 +7488,15 @@ textarea.form-control-lg {
 .link-youtube-superchat:hover, .link-youtube-superchat:focus {
   color: RGBA(151, 1, 55, var(--bs-link-opacity, 1)) !important;
   text-decoration-color: RGBA(151, 1, 55, var(--bs-link-underline-opacity, 1)) !important;
+}
+
+.link-cyan {
+  color: RGBA(var(--bs-cyan-rgb), var(--bs-link-opacity, 1)) !important;
+  text-decoration-color: RGBA(var(--bs-cyan-rgb), var(--bs-link-underline-opacity, 1)) !important;
+}
+.link-cyan:hover, .link-cyan:focus {
+  color: RGBA(69, 181, 198, var(--bs-link-opacity, 1)) !important;
+  text-decoration-color: RGBA(69, 181, 198, var(--bs-link-underline-opacity, 1)) !important;
 }
 
 .link-body-emphasis {
@@ -7896,6 +7966,10 @@ textarea.form-control-lg {
   --bs-focus-ring-color: rgba(var(--bs-youtube-superchat-rgb), var(--bs-focus-ring-opacity));
 }
 
+.focus-ring-cyan {
+  --bs-focus-ring-color: rgba(var(--bs-cyan-rgb), var(--bs-focus-ring-opacity));
+}
+
 .position-static {
   position: static !important;
 }
@@ -8096,6 +8170,11 @@ textarea.form-control-lg {
   border-color: rgba(var(--bs-youtube-superchat-rgb), var(--bs-border-opacity)) !important;
 }
 
+.border-cyan {
+  --bs-border-opacity: 1;
+  border-color: rgba(var(--bs-cyan-rgb), var(--bs-border-opacity)) !important;
+}
+
 .border-black {
   --bs-border-opacity: 1;
   border-color: rgba(var(--bs-black-rgb), var(--bs-border-opacity)) !important;
@@ -8176,10 +8255,6 @@ textarea.form-control-lg {
 
 .border-opacity-100 {
   --bs-border-opacity: 1;
-}
-
-.w-20 {
-  width: 20% !important;
 }
 
 .w-25 {
@@ -9091,6 +9166,11 @@ textarea.form-control-lg {
   color: rgba(var(--bs-youtube-superchat-rgb), var(--bs-text-opacity)) !important;
 }
 
+.text-cyan {
+  --bs-text-opacity: 1;
+  color: rgba(var(--bs-cyan-rgb), var(--bs-text-opacity)) !important;
+}
+
 .text-black {
   --bs-text-opacity: 1;
   color: rgba(var(--bs-black-rgb), var(--bs-text-opacity)) !important;
@@ -9333,6 +9413,11 @@ textarea.form-control-lg {
   text-decoration-color: rgba(var(--bs-youtube-superchat-rgb), var(--bs-link-underline-opacity)) !important;
 }
 
+.link-underline-cyan {
+  --bs-link-underline-opacity: 1;
+  text-decoration-color: rgba(var(--bs-cyan-rgb), var(--bs-link-underline-opacity)) !important;
+}
+
 .link-underline {
   --bs-link-underline-opacity: 1;
   text-decoration-color: rgba(var(--bs-link-color-rgb), var(--bs-link-underline-opacity, 1)) !important;
@@ -9464,6 +9549,11 @@ textarea.form-control-lg {
 .bg-youtube-superchat {
   --bs-bg-opacity: 1;
   background-color: rgba(var(--bs-youtube-superchat-rgb), var(--bs-bg-opacity)) !important;
+}
+
+.bg-cyan {
+  --bs-bg-opacity: 1;
+  background-color: rgba(var(--bs-cyan-rgb), var(--bs-bg-opacity)) !important;
 }
 
 .bg-black {
