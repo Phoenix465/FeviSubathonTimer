@@ -10,10 +10,10 @@ function addContribution(contribution_id, custom_quantity = null) {
     let quantity = 1;
 
     if (contribution_id === "twitch_t1" || contribution_id === "twitch_t2" || contribution_id === "twitch_t3") {
-        quantity = parseInt(document.querySelector('input[name="twitch-radio"]:checked').value);
+        quantity = parseInt(document.querySelector('input[name="quantity-radio"]:checked').value);
     }
     if (contribution_id === "youtube_member_t1" || contribution_id === "youtube_member_t2" || contribution_id === "youtube_member_t3") {
-        quantity = parseInt(document.querySelector('input[name="youtube-radio"]:checked').value);
+        quantity = parseInt(document.querySelector('input[name="quantity-radio"]:checked').value);
     }
 
     if (custom_quantity !== null && !isNaN(custom_quantity)) {
@@ -33,12 +33,12 @@ function showContribution(title, contribution, quantity, seconds_added, points_a
     showNotification(`
         <!-- Header -->
         <div class="toast-header bg-${theme_type}-subtle text-${theme_type}-dark fw-semibold">
-            <strong class="me-auto">${title}</strong>
-            <button type="button" class="btn-close ms-2" data-bs-dismiss="toast" aria-label="Close"></button>
+            <strong class="me-auto fs-7">${title}</strong>
+            <button type="button" class="btn-close ms-2 fs-7" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
-        
+            
         <!-- Body -->
-        <div class="toast-body bg-${theme_type} text-white fw-medium">
+        <div class="toast-body bg-${theme_type} text-white fw-medium fs-6_5">
             <div>
                 <span class="fw-semibold">${contribution}</span> × <span class="text-muted">${quantity}</span>
             </div>
@@ -51,6 +51,25 @@ function showContribution(title, contribution, quantity, seconds_added, points_a
 
     `);
 }
+
+function showError(title, message, theme_type) {
+    showNotification(`
+        <!-- Header -->
+        <div class="toast-header bg-${theme_type}-subtle text-${theme_type}-dark fw-semibold">
+            <strong class="me-auto fs-7">${title}</strong>
+            <button type="button" class="btn-close ms-2 fs-7" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+            
+        <!-- Body -->
+        <div class="toast-body bg-${theme_type} text-white fw-medium fs-6_5">
+            <div>
+                ${message}
+            </div>
+        </div>
+        <div class="toast-progress"></div>
+    `);
+}
+
 
 function showNotification(innerHTML) {
     // Create toast element
@@ -67,8 +86,8 @@ function showNotification(innerHTML) {
     document.getElementById("toast-container").appendChild(toastEl);
 
     // Show toast
-    // const toast = new bootstrap.Toast(toastEl, {delay: 3000});
-    const toast = new bootstrap.Toast(toastEl, {delay: 50000});
+    const toast = new bootstrap.Toast(toastEl, {delay: 3000});
+    // const toast = new bootstrap.Toast(toastEl, {delay: 50000});
     toast.show();
 }
 
@@ -94,41 +113,25 @@ document.querySelectorAll('input.input-integer-control').forEach(input => {
     });
 })
 
-document.querySelectorAll('input[name="twitch-radio"]').forEach(input => {
+document.querySelectorAll('input[name="quantity-radio"]').forEach(input => {
     input.addEventListener("change", (event) => {
         let multiplier = parseInt(event.target.value);
-        console.log("Twitch Multiplier updated to ×" + multiplier);
+        console.log("Multiplier updated to ×" + multiplier);
 
-        document.querySelectorAll('span.twitch-quantity-text').forEach(input => {
-            twitch_multiplier = multiplier;
-
-            if (multiplier === 1) {
-                input.textContent = ``;
-            } else {
-                let padding = multiplier < 10 ? "‎ " : "";
-                input.textContent = `[×${multiplier}${padding}]`;
-            }
-        })
+        // document.querySelectorAll('span.twitch-quantity-text').forEach(input => {
+        //     twitch_multiplier = multiplier;
+        //
+        //     if (multiplier === 1) {
+        //         input.textContent = ``;
+        //     } else {
+        //         let padding = multiplier < 10 ? "‎ " : "";
+        //         input.textContent = `[×${multiplier}${padding}]`;
+        //     }
+        // })
     });
 });
 
-document.querySelectorAll('input[name="youtube-radio"]').forEach(input => {
-    input.addEventListener("change", (event) => {
-        let multiplier = parseInt(event.target.value);
-        console.log("Youtube Multiplier updated to ×" + multiplier);
 
-        document.querySelectorAll('span.youtube-quantity-text').forEach(input => {
-            twitch_multiplier = multiplier;
-
-            if (multiplier === 1) {
-                input.textContent = ``;
-            } else {
-                let padding = multiplier < 10 ? "‎ " : "";
-                input.textContent = `[×${multiplier}${padding}]`;
-            }
-        })
-    });
-});
 
 // ---- Socket ----
 var socket = io();
@@ -149,9 +152,14 @@ socket.on("subathon_info", function (data) {
 })
 
 
-socket.on("notification_event", function (data) {
+socket.on("notification_contribution_event", function (data) {
     showContribution(data.title, data.contribution, data.quantity, data.seconds_added, data.points_added, data.theme_type);
 })
+
+socket.on("notification_error_event", function (data) {
+    showError(data.title, data.message, data.theme_type);
+})
+
 
 
 

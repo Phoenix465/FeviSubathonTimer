@@ -57,6 +57,14 @@ def apply_contribution(data: dict):
     if data.get("contribution_id", None) not in config["contribution_map_seconds"] or "quantity" not in data:
         return
 
+    if subathon_timer.paused:
+        emit("notification_error_event", {
+            "title": "❌ Failed to Add Contribution",
+            "message": "Timer is paused",
+            "theme_type": "danger"
+        })
+        return
+
     contribution_id = data["contribution_id"]
     seconds_per_contribution = config["contribution_map_seconds"][contribution_id]
     quantity = data["quantity"]
@@ -74,7 +82,7 @@ def apply_contribution(data: dict):
     subathon_timer.add_seconds(seconds_bonus)
 
 
-    emit("notification_event", {
+    emit("notification_contribution_event", {
         "title": "✅ Applied Contribution",
         "contribution": contribution_id,
         "quantity": quantity,

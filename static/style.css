@@ -3,6 +3,19 @@
     width: 20% !important;
 }
 
+.fs-6_5 {
+  font-size: 0.85rem !important
+}
+
+.fs-7 {
+  font-size: 0.6rem !important;
+}
+
+.fs-8 {
+  font-size: 0.7rem !important;
+}
+
+
 .card {
     --bs-card-spacer-y: 0.5rem !important;
 }
@@ -43,10 +56,25 @@
     }
 }
 
-.toast-container {
-    /*width: 20vw;*/
+.version-number {
+    color: white !important;
 }
 
-.toast-container .toast {
-    max-width: unset;
+.toast-container > :not(:last-child) {
+  margin-bottom: 0.5rem !important;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+body {
+  overflow: hidden;
 }
