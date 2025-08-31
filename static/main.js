@@ -29,6 +29,48 @@ function toggleTimer() {
     socket.emit('toggle_timer');
 }
 
+function showContribution(title, contribution, quantity, seconds_added, points_added, theme_type) {
+    showNotification(`
+        <!-- Header -->
+        <div class="toast-header bg-${theme_type}-subtle text-${theme_type}-dark fw-semibold">
+            <strong class="me-auto">${title}</strong>
+            <button type="button" class="btn-close ms-2" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        
+        <!-- Body -->
+        <div class="toast-body bg-${theme_type} text-white fw-medium">
+            <div>
+                <span class="fw-semibold">${contribution}</span> × <span class="text-muted">${quantity}</span>
+            </div>
+            <div class="text-end">
+                <div><small>${seconds_added} sec</small></div>
+                <div><small>${points_added} pts</small></div>
+            </div>
+        </div>
+        <div class="toast-progress"></div>
+
+    `);
+}
+
+function showNotification(innerHTML) {
+    // Create toast element
+    const toastEl = document.createElement('div');
+    toastEl.className = "toast col-4 shadow-lg border-0rounded-3 mb-3 overflow-hidden";
+    toastEl.style.maxWidth = "200px"
+    toastEl.setAttribute("role", "alert");
+    toastEl.setAttribute("aria-live", "assertive");
+    toastEl.setAttribute("aria-atomic", "true");
+
+    toastEl.innerHTML = innerHTML
+
+    // Append toast to container
+    document.getElementById("toast-container").appendChild(toastEl);
+
+    // Show toast
+    // const toast = new bootstrap.Toast(toastEl, {delay: 3000});
+    const toast = new bootstrap.Toast(toastEl, {delay: 50000});
+    toast.show();
+}
 
 // ---- Event Listeners ----
 document.querySelectorAll('button.custom-quantity-button').forEach(button => {
@@ -105,6 +147,13 @@ socket.on("subathon_info", function (data) {
     timer_el.textContent = formatted_seconds_left;
     points_el.textContent = points_total;
 })
+
+
+socket.on("notification_event", function (data) {
+    showContribution(data.title, data.contribution, data.quantity, data.seconds_added, data.points_added, data.theme_type);
+})
+
+
 
 setInterval(function () {
     socket.emit('poll_subathon_info')

@@ -17,7 +17,7 @@
 <body style="background-color: #1A1A1E">
 <div class="container my-4" data-bs-theme="dark">
     <!-- Timer & Points Display -->
-    <div class="card mb-2 col-8 text-center mx-auto">
+    <div class="card mb-2 col-12 text-center mx-auto">
         <div class="card-body">
             <h5 class="card-title"><b>Subathon Information (<span id="status">Server Missing</span>)</b></h5>
 
@@ -37,111 +37,134 @@
     </div>
 
     <!-- Reward Buttons -->
-    <div class="card mb-2 col-8 text-center mx-auto">
+    <div class="card mb-2 col-12 text-center mx-auto">
         <div class="card-body text-center">
             <h5 class="card-title text-center mb-4"><b>Twitch</b></h5>
 
             <div class="position-absolute top-0 end-0 p-2">
                 <div class="btn-group align-middle">
-                    <input type="radio" class="btn-check" name="twitch-radio" id="btn-twitch-quantity-1x" value="1" autocomplete="off" checked>
+                    <input type="radio" class="btn-check" name="twitch-radio" id="btn-twitch-quantity-1x" value="1"
+                           autocomplete="off" checked>
                     <label class="btn btn-outline-primary px-2" for="btn-twitch-quantity-1x">×1</label>
 
-                    <input type="radio" class="btn-check" name="twitch-radio" id="btn-twitch-quantity-5x" value="5" autocomplete="off">
+                    <input type="radio" class="btn-check" name="twitch-radio" id="btn-twitch-quantity-5x" value="5"
+                           autocomplete="off">
                     <label class="btn btn-outline-primary px-2" for="btn-twitch-quantity-5x">×5</label>
 
-                    <input type="radio" class="btn-check" name="twitch-radio" id="btn-twitch-quantity-10x" value="10" autocomplete="off">
+                    <input type="radio" class="btn-check" name="twitch-radio" id="btn-twitch-quantity-10x" value="10"
+                           autocomplete="off">
                     <label class="btn btn-outline-primary px-2" for="btn-twitch-quantity-10x">×10</label>
 
-                   <input type="radio" class="btn-check" name="twitch-radio" id="btn-twitch-quantity-20x" value="20" autocomplete="off">
+                    <input type="radio" class="btn-check" name="twitch-radio" id="btn-twitch-quantity-20x" value="20"
+                           autocomplete="off">
                     <label class="btn btn-outline-primary px-2" for="btn-twitch-quantity-20x">×20</label>
 
 
-                    <input type="radio" class="btn-check" name="twitch-radio" id="btn-twitch-quantity-50x" value="50" autocomplete="off">
+                    <input type="radio" class="btn-check" name="twitch-radio" id="btn-twitch-quantity-50x" value="50"
+                           autocomplete="off">
                     <label class="btn btn-outline-primary px-2" for="btn-twitch-quantity-50x">×50</label>
                 </div>
             </div>
 
             <div class="col-12 mb-2">
-                <button class="btn btn-twitch-sub-T2 mx-1 w-25 position-relative" onclick="addContribution('twitch_t1')">
+                <button class="btn btn-twitch-sub-T2 mx-1 w-25 position-relative"
+                        onclick="addContribution('twitch_t1')">
                     <span class="button-label">T1 Sub</span>
                     <span class="badge bg-cyan text-light twitch-quantity-text roboto-mono-normal"></span>
                 </button>
-                <button class="btn btn-twitch-sub-T2 mx-1 w-25 position-relative" onclick="addContribution('twitch_t2')">
+                <button class="btn btn-twitch-sub-T2 mx-1 w-25 position-relative"
+                        onclick="addContribution('twitch_t2')">
                     <span class="button-label">T2 Sub</span>
                     <span class="badge bg-cyan text-light twitch-quantity-text roboto-mono-normal"></span>
                 </button>
-                <button class="btn btn-twitch-sub-T2 mx-1 w-25 position-relative" onclick="addContribution('twitch_t3')">
+                <button class="btn btn-twitch-sub-T2 mx-1 w-25 position-relative"
+                        onclick="addContribution('twitch_t3')">
                     <span class="button-label">T3 Sub</span>
                     <span class="badge bg-cyan text-light twitch-quantity-text roboto-mono-normal"></span>
                 </button>
             </div>
 
             <div class="col-12 mb-2" role="group">
-                <button class="btn btn-twitch-bits mx-1 w-20" onclick="addContribution('twitch_bits', 100)">Bits - 100</button>
-                <button class="btn btn-twitch-bits mx-1 w-20" onclick="addContribution('twitch_bits', 200)">Bits - 200</button>
-                <button class="btn btn-twitch-bits mx-1 w-20" onclick="addContribution('twitch_bits', 500)">Bits - 500</button>
+                <button class="btn btn-twitch-bits mx-1 w-20" onclick="addContribution('twitch_bits', 100)">Bits - 100
+                </button>
+                <button class="btn btn-twitch-bits mx-1 w-20" onclick="addContribution('twitch_bits', 200)">Bits - 200
+                </button>
+                <button class="btn btn-twitch-bits mx-1 w-20" onclick="addContribution('twitch_bits', 500)">Bits - 500
+                </button>
                 <button class="btn btn-twitch-bits mx-1 w-20" onclick="addContribution('twitch_bits', 1000)">Bits - 1000
                 </button>
             </div>
         </div>
     </div>
 
-    <div class="card mb-2 col-8 text-center mx-auto">
+    <div class="card mb-2 col-12 text-center mx-auto">
         <div class="card-body text-center">
             <h5 class="card-title text-center mb-4"><b>Youtube</b></h5>
-            
+
             <div class="position-absolute top-0 end-0 p-2">
                 <div class="btn-group align-middle">
-                    <input type="radio" class="btn-check" name="youtube-radio" id="btn-youtube-quantity-1x" value="1" autocomplete="off" checked>
+                    <input type="radio" class="btn-check" name="youtube-radio" id="btn-youtube-quantity-1x" value="1"
+                           autocomplete="off" checked>
                     <label class="btn btn-outline-primary px-2" for="btn-youtube-quantity-1x">×1</label>
 
-                    <input type="radio" class="btn-check" name="youtube-radio" id="btn-youtube-quantity-5x" value="5" autocomplete="off">
+                    <input type="radio" class="btn-check" name="youtube-radio" id="btn-youtube-quantity-5x" value="5"
+                           autocomplete="off">
                     <label class="btn btn-outline-primary px-2" for="btn-youtube-quantity-5x">×5</label>
 
-                    <input type="radio" class="btn-check" name="youtube-radio" id="btn-youtube-quantity-10x" value="10" autocomplete="off">
+                    <input type="radio" class="btn-check" name="youtube-radio" id="btn-youtube-quantity-10x" value="10"
+                           autocomplete="off">
                     <label class="btn btn-outline-primary px-2" for="btn-youtube-quantity-10x">×10</label>
 
-                   <input type="radio" class="btn-check" name="youtube-radio" id="btn-youtube-quantity-20x" value="20" autocomplete="off">
+                    <input type="radio" class="btn-check" name="youtube-radio" id="btn-youtube-quantity-20x" value="20"
+                           autocomplete="off">
                     <label class="btn btn-outline-primary px-2" for="btn-youtube-quantity-20x">×20</label>
 
-                    <input type="radio" class="btn-check" name="youtube-radio" id="btn-youtube-quantity-50x" value="50" autocomplete="off">
+                    <input type="radio" class="btn-check" name="youtube-radio" id="btn-youtube-quantity-50x" value="50"
+                           autocomplete="off">
                     <label class="btn btn-outline-primary px-2" for="btn-youtube-quantity-50x">×50</label>
                 </div>
             </div>
-            
+
             <div class="col-12 mb-2">
-                <button class="btn btn-youtube-member-T2 mx-1 w-25 position-relative" onclick="addContribution('youtube_member_t1')">
+                <button class="btn btn-youtube-member-T2 mx-1 w-25 position-relative"
+                        onclick="addContribution('youtube_member_t1')">
                     <span class="button-label">Member T1</span>
                     <span class="badge bg-cyan text-light youtube-quantity-text roboto-mono-normal"></span>
                 </button>
-                <button class="btn btn-youtube-member-T2 mx-1 w-25 position-relative" onclick="addContribution('youtube_member_t2')">
+                <button class="btn btn-youtube-member-T2 mx-1 w-25 position-relative"
+                        onclick="addContribution('youtube_member_t2')">
                     <span class="button-label">Member T2</span>
                     <span class="badge bg-cyan text-light youtube-quantity-text roboto-mono-normal"></span>
                 </button>
-                <button class="btn btn-youtube-member-T2 mx-1 w-25 position-relative" onclick="addContribution('youtube_member_t3')">
+                <button class="btn btn-youtube-member-T2 mx-1 w-25 position-relative"
+                        onclick="addContribution('youtube_member_t3')">
                     <span class="button-label">Member T3</span>
                     <span class="badge bg-cyan text-light youtube-quantity-text roboto-mono-normal"></span>
                 </button>
             </div>
 
             <div class="col-12 mb-2">
-                <button class="btn btn-youtube-superchat mx-1 mb-1 w-20" onclick="addContribution('youtube_superchat_USD', 5)">Superchat
+                <button class="btn btn-youtube-superchat mx-1 mb-1 w-20"
+                        onclick="addContribution('youtube_superchat_USD', 5)">Superchat
                     $5
                 </button>
-                <button class="btn btn-youtube-superchat mx-1 mb-1 w-20" onclick="addContribution('youtube_superchat_USD', 20)">Superchat
+                <button class="btn btn-youtube-superchat mx-1 mb-1 w-20"
+                        onclick="addContribution('youtube_superchat_USD', 20)">Superchat
                     $20
                 </button>
-                <button class="btn btn-youtube-superchat mx-1 mb-1 w-20" onclick="addContribution('youtube_superchat_USD', 50)">Superchat
+                <button class="btn btn-youtube-superchat mx-1 mb-1 w-20"
+                        onclick="addContribution('youtube_superchat_USD', 50)">Superchat
                     $50
                 </button>
-                <button class="btn btn-youtube-superchat mx-1 mb-1 w-20" onclick="addContribution('youtube_superchat_USD', 100)">Superchat
+                <button class="btn btn-youtube-superchat mx-1 mb-1 w-20"
+                        onclick="addContribution('youtube_superchat_USD', 100)">Superchat
                     $100
                 </button>
             </div>
         </div>
     </div>
 
-    <div class="card mb-2 col-8 text-center mx-auto">
+    <div class="card mb-2 col-12 text-center mx-auto">
         <div class="card-body text-center">
             <h5 class="card-title text-center mb-3"><b>Other</b></h5>
 
@@ -150,35 +173,43 @@
                     <label class="fw-bold mb-1">Chzzk (Cheese)</label>
                     <div class="input-group">
                         <input type="number" class="form-control text-center input-integer-control" placeholder="Qty">
-                        <button data-contributionId="chzzk" class="btn btn-success px-2 custom-quantity-button">✅</button>
+                        <button data-contributionId="chzzk" class="btn btn-success px-2 custom-quantity-button">✅
+                        </button>
                     </div>
                 </div>
                 <div class="col">
                     <label class="fw-bold mb-1">Afreeca (Balloons)</label>
                     <div class="input-group">
                         <input type="number" class="form-control text-center input-integer-control" placeholder="Qty">
-                        <button data-contributionId="afreeca" class="btn btn-success px-2 custom-quantity-button">✅</button>
+                        <button data-contributionId="afreeca" class="btn btn-success px-2 custom-quantity-button">✅
+                        </button>
                     </div>
                 </div>
                 <div class="col">
                     <label class="fw-bold mb-1">Twitch Bits (#)</label>
                     <div class="input-group">
                         <input type="number" class="form-control text-center input-integer-control" placeholder="Qty">
-                        <button data-contributionId="twitch_bits" class="btn btn-success px-2 custom-quantity-button">✅</button>
+                        <button data-contributionId="twitch_bits" class="btn btn-success px-2 custom-quantity-button">
+                            ✅
+                        </button>
                     </div>
                 </div>
                 <div class="col">
                     <label class="fw-bold mb-1">Superchat ($)</label>
                     <div class="input-group">
                         <input type="number" class="form-control text-center" placeholder="Qty">
-                        <button data-contributionId="youtube_superchat_USD" class="btn btn-success px-2 custom-quantity-button">✅</button>
+                        <button data-contributionId="youtube_superchat_USD"
+                                class="btn btn-success px-2 custom-quantity-button">✅
+                        </button>
                     </div>
                 </div>
                 <div class="col">
                     <label class="fw-bold mb-1">StreamElements ($)</label>
                     <div class="input-group">
                         <input type="number" class="form-control text-center" placeholder="Qty">
-                        <button data-contributionId="stream_elements_USD" class="btn btn-success px-2 custom-quantity-button">✅</button>
+                        <button data-contributionId="stream_elements_USD"
+                                class="btn btn-success px-2 custom-quantity-button">✅
+                        </button>
                     </div>
                 </div>
             </div>
@@ -186,31 +217,54 @@
     </div>
 
     <!-- Manual Adjust Buttons -->
-    <div class="card mb-2 col-8 text-center mx-auto">
+    <div class="card mb-2 col-12 text-center mx-auto">
         <div class="card-body text-center">
             <h5 class="card-title text-center mb-3"><b>Manual Adjust</b></h5>
 
             <div class="col-12 mb-2">
-                <button class="btn btn-outline-secondary mx-1 mb-1" onclick="addContribution('system_adjustment_seconds', 30)">+30s</button>
-                <button class="btn btn-outline-secondary mx-1 mb-1" onclick="addContribution('system_adjustment_seconds', 60)">+1m</button>
-                <button class="btn btn-outline-secondary mx-1 mb-1" onclick="addContribution('system_adjustment_seconds', 300)">+5m</button>
-                <button class="btn btn-outline-secondary mx-1 mb-1" onclick="addContribution('system_adjustment_seconds', -60)">-1m</button>
+                <button class="btn btn-outline-secondary mx-1 mb-1"
+                        onclick="addContribution('system_adjustment_seconds', 30)">+30s
+                </button>
+                <button class="btn btn-outline-secondary mx-1 mb-1"
+                        onclick="addContribution('system_adjustment_seconds', 60)">+1m
+                </button>
+                <button class="btn btn-outline-secondary mx-1 mb-1"
+                        onclick="addContribution('system_adjustment_seconds', 300)">+5m
+                </button>
+                <button class="btn btn-outline-secondary mx-1 mb-1"
+                        onclick="addContribution('system_adjustment_seconds', -60)">-1m
+                </button>
             </div>
 
             <div class="col-12">
-                <button class="btn btn-outline-secondary mx-1 mb-1" onclick="addContribution('system_adjustment_points', 1)">+1 pt</button>
-                <button class="btn btn-outline-secondary mx-1 mb-1" onclick="addContribution('system_adjustment_points', 5)">+5 pt</button>
-                <button class="btn btn-outline-secondary mx-1 mb-1" onclick="addContribution('system_adjustment_points', 10)">+10 pt</button>
-                <button class="btn btn-outline-secondary mx-1 mb-1" onclick="addContribution('system_adjustment_points', -1)">-1 pt</button>
+                <button class="btn btn-outline-secondary mx-1 mb-1"
+                        onclick="addContribution('system_adjustment_points', 1)">+1 pt
+                </button>
+                <button class="btn btn-outline-secondary mx-1 mb-1"
+                        onclick="addContribution('system_adjustment_points', 5)">+5 pt
+                </button>
+                <button class="btn btn-outline-secondary mx-1 mb-1"
+                        onclick="addContribution('system_adjustment_points', 10)">+10 pt
+                </button>
+                <button class="btn btn-outline-secondary mx-1 mb-1"
+                        onclick="addContribution('system_adjustment_points', -1)">-1 pt
+                </button>
             </div>
         </div>
     </div>
 
     <!-- Timer Control Buttons -->
     <div class="row text-center mt-3">
-        <div class="col">
+        <div class="col ">
             <button class="btn btn-danger mx-2" onclick="toggleTimer()">Pause / Resume</button>
             <!--            <button class="btn btn-dark mx-2" onclick="resetTimer()">Reset Timer</button>-->
+        </div>
+    </div>
+
+    <!-- Notification container (Right) -->
+    <div class="col-2">
+        <div class="toast-container position-absolute top-0 end-0 p-3" id="toast-container">
+            <!-- Toasts will be injected here -->
         </div>
     </div>
 
