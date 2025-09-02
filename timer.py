@@ -8,6 +8,12 @@ class Timer:
         self.paused = paused
         self.pause_timer_duration = 0
 
+    def set_time(self, time_left):
+        self.end_time_reference = time.time() + time_left
+        self.paused = False
+        self.pause_timer_duration = 0
+
+
     def toggle_pause(self):
         if not self.paused:
             self.pause_timer_duration = self.get_time_left(round_time=False)
@@ -43,6 +49,8 @@ class Timer:
     # Formats seconds into HH:MM:SS
     @staticmethod
     def format_time(seconds: int) -> str:
+        seconds = round(seconds)
+
         hours = seconds // 3600
         minutes = (seconds % 3600) // 60
         secs = seconds % 60

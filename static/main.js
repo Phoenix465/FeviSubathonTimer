@@ -4,6 +4,10 @@ var points_el = document.getElementById("points");
 
 let twitch_multiplier = 1;
 let youtube_multiplier = 1;
+let isLoading = false;
+
+const loadingIndicator = document.getElementById("loadingIndicator");
+const historyListEl = document.getElementById("history-list");
 
 // Functions
 function addContribution(contribution_id, custom_quantity = null) {
@@ -91,6 +95,134 @@ function showNotification(innerHTML) {
     toast.show();
 }
 
+function showHistoryEvent(data, prepend = true) {
+    showHistory(
+        data.id,
+        data.date_day,
+        data.date_time,
+        data.contribution_id,
+        data.contribution_type,
+        data.quantity,
+        data.seconds_added,
+        data.points_added,
+        data.seconds_total,
+        data.points_total_post,
+        prepend
+    )
+}
+
+function showHistory(id, date_day, date_time, contribution_id, contribution_type, quantity, seconds_added, points_added, seconds_total_post, points_total_post, prepend = true) {
+    // Create toast element
+    const historyEl = document.createElement('div');
+    historyEl.className = `history-entry contribution ${contribution_type}`;
+    historyEl.setAttribute("data-id", id);
+    historyEl.innerHTML = `
+        <!-- ID column -->
+        <span class="entry-id">${id}</span>
+
+        <!-- Vertical separator -->
+        <div class="separator"></div>
+
+        <!-- Main content -->
+        <div class="entry-content flex-grow-1">
+            <!-- Top row: contribution -->
+            <div class="d-flex justify-content-between">
+                <span class="contribution">${contribution_id}</span>
+                <span class="roboto-mono-normal">×${quantity}</span>
+            </div>
+
+            <!-- Bottom row: increment left, timer + points right -->
+            <div class="d-flex justify-content-between small text-muted mt-1">
+                <!-- Increment info -->
+                <span class="increment">${seconds_added > 0 ? '+' : ''}${seconds_added}s · ${points_added > 0 ? '+' : ''}${points_added} pts</span>
+            </div>
+            <div class="d-flex justify-content-between small text-muted mt-1">
+                <!-- State snapshot -->
+                <span class="state"> ⏱ ${seconds_total_post} </span>
+                <span class="state">🔹 <span class="">${points_total_post}</span> pts </span>
+            </div>
+
+            <div class="d-flex justify-content-between small text-muted mt-1">
+                <span class="timestamp roboto-mono-normal">${date_day}</span>
+                <span class="timestamp roboto-mono-normal">${date_time}</span>
+            </div>
+        </div>
+    `
+
+    if (prepend) {
+        historyListEl.prepend(historyEl);
+    } else {
+        if (historyListEl.lastElementChild) {
+            historyListEl.insertBefore(historyEl, historyListEl.lastElementChild);
+        } else {
+            historyListEl.appendChild(historyEl);
+        }
+    }
+
+    historyEl.onclick = function () {
+        socket.emit('request_rollback', {id: historyEl.dataset.id});
+    };
+}
+
+async function loadHistory() {
+    if (isLoading) return;
+
+    isLoading = true;
+    loadingIndicator.classList.remove("hidden");
+
+    let historyEnd = -1;
+    if (historyListEl.children.length > 1) {
+        historyEnd = Math.min(...Array.from(historyListEl.children).slice(0, -1).map(child => parseInt(child.getAttribute("data-id"))));
+    }
+
+    if (historyEnd === 0) {
+        loadingIndicator.classList.add("hidden");
+        isLoading = false;
+        return;
+    }
+
+
+    if (historyEnd === -1) {
+        const history_length_res = await fetch(`/api/v1/history-length`);
+        if (!history_length_res.ok) {
+            loadingIndicator.classList.add("hidden");
+            isLoading = false;
+            showError("❌ Failed to get History Length", `Solution: Turn on Server!`, "danger");
+            return;
+        }
+
+        const history_length_json = await history_length_res.json();
+        historyEnd = history_length_json["total"];
+    }
+
+    if (historyEnd === 0) {
+        loadingIndicator.classList.add("hidden");
+        isLoading = false;
+        return;
+    }
+
+    let historyStart = Math.max(historyEnd - 50 - 1, 0);
+    const res = await fetch(`/api/v1/history?start=${historyStart}&end=${historyEnd - 1}`);
+
+    if (!res.ok) {
+        loadingIndicator.classList.add("hidden");
+        isLoading = false;
+        showError("❌ Failed to get History Chunk", `Range: [${historyStart}, ${historyEnd - 1}]`, "danger");
+        return;
+    }
+
+    const data = await res.json();
+
+    data["logs"].reverse();
+    data["logs"].forEach(item => {
+        showHistoryEvent(item, false)
+    });
+
+    loadingIndicator.classList.add("hidden");
+    isLoading = false;
+}
+
+
 // ---- Event Listeners ----
 document.querySelectorAll('button.custom-quantity-button').forEach(button => {
     button.addEventListener("click", () => {
@@ -131,7 +263,11 @@ document.querySelectorAll('input[name="quantity-radio"]').forEach(input => {
     });
 });
 
-
+historyListEl.addEventListener("scroll", () => {
+    if (historyListEl.scrollTop + historyListEl.clientHeight >= historyListEl.scrollHeight - 10) {
+        loadHistory().then();
+    }
+});
 
 // ---- Socket ----
 var socket = io();
@@ -160,9 +296,38 @@ socket.on("notification_error_event", function (data) {
     showError(data.title, data.message, data.theme_type);
 })
 
+socket.on("history_event", function (data) {
+    showHistoryEvent(data);
+})
+
+socket.on("rollback_confirmation", function (data) {
+    // Fill modal content dynamically
+    document.getElementById("rollbackId").textContent = `#${data.rollback_id}`;
+    document.getElementById("rollbackDatetime").textContent = data.datetime;
+
+    document.getElementById("rollbackTimeNew").textContent = data.new_time;
+    document.getElementById("rollbackPointsNew").textContent = data.new_points;
+
+    document.getElementById("rollbackTimeDiff").textContent = `${data.diff_time}`
+
+    document.getElementById("rollbackPointsDiff").textContent = `${data.diff_points}`;
 
 
+    // Show modal
+    const rollbackModal = new bootstrap.Modal(document.getElementById('rollbackModal'));
+    rollbackModal.show();
+
+    // Confirm rollback
+    document.getElementById('confirmRollback').onclick = function () {
+        // Send rollback request via socket or fetch
+        console.log("Rollback confirmed!");
+
+        socket.emit('perform_rollback', {id: data.rollback_id});
+        rollbackModal.hide();
+    };
+})
 
 setInterval(function () {
     socket.emit('poll_subathon_info')
 }, 100) // Poll every 100ms
+loadHistory().then();

@@ -4,15 +4,15 @@
 }
 
 .fs-6_5 {
-  font-size: 0.85rem !important
+    font-size: 0.85rem !important
 }
 
 .fs-7 {
-  font-size: 0.6rem !important;
+    font-size: 0.6rem !important;
 }
 
 .fs-8 {
-  font-size: 0.7rem !important;
+    font-size: 0.7rem !important;
 }
 
 
@@ -61,20 +61,228 @@
 }
 
 .toast-container > :not(:last-child) {
-  margin-bottom: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
 }
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 /* Firefox */
 input[type=number] {
-  -moz-appearance: textfield;
+    -moz-appearance: textfield;
 }
 
 body {
-  overflow: hidden;
+    overflow: hidden;
+}
+
+/* ------- Custom CSS ------- */
+#main-container {
+    padding-right: 5px;
+}
+
+.history-container {
+    width: 25%;
+    /*max-width: 200px !important;*/
+    max-height: 100vh !important;
+    /*border-right: 1px solid #2a2a2a;*/
+    /*background: #121212; !* main dark bg *!*/
+    padding: 0.75rem !important;
+    color: #e0e0e0 !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    direction: rtl;
+
+}
+
+.history-title {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #f5f5f5;
+    direction: ltr;
+}
+
+.history-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-left: -10px !important;
+    margin-right: 2px !important;
+    padding-left: 5px; /* adjust as needed */
+    /*padding-bottom: 2.5rem;   !* space so last item isn’t hidden *!*/
+    /*margin-bottom: 2.5rem !important;   !* space so last item isn’t hidden *!*/
+
+    overflow-y: auto !important;
+    scrollbar-width: thin !important;
+    max-height: calc(100vh - 40px) !important;
+    height: calc(100vh - 40px) !important;
+}
+
+.history-entry {
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0.5rem;
+    font-size: 0.7rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    background: #1e1e1e; /* card bg */
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.history-entry:hover {
+    transform: translateX(6px); /* "poke out" effect */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+    /*box-shadow: 0 0 6px rgba(255, 255, 255, 0.2);*/
+}
+
+.history-entry .small {
+    font-size: 0.75rem;
+}
+
+.history-entry .history-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 500;
+    color: #f0f0f0;
+}
+
+.history-entry .history-details {
+    font-size: 0.8rem;
+    color: #bbb;
+}
+
+.history-entry.rollback {
+    background: #2C2F48;
+    border-left: 4px solid #FF6B6B;
+}
+
+.history-entry.contribution.system {
+    background: #2C2F48;
+    border-left: 4px solid #FFD93D;
+}
+
+.history-entry.contribution.twitch {
+    background: #2C2F48;
+    border-left: 4px solid #9146FF;
+}
+
+.history-entry.contribution.youtube {
+    background: #2C2F48;
+    border-left: 4px solid #FF0000;
+}
+
+.history-entry.contribution.stream_elements {
+    background: #2C2F48;
+    border-left: 4px solid #A970FF;
+}
+
+.history-entry.contribution.afreeca {
+    background: #2C2F48;
+    border-left: 4px solid #3FA9F5;
+}
+
+.history-entry.contribution.chzzk {
+    background: #2C2F48;
+    border-left: 4px solid #FFC857;
+}
+
+
+.history-entry {
+    padding: 6px 10px;
+    border-radius: 6px;
+    margin-bottom: 6px;
+    background: #1e1e1e; /* dark mode */
+    display: flex;
+    align-items: center;
+    direction: ltr;
+}
+
+.history-entry .entry-id {
+    text-align: right;
+    margin-right: 0px;
+    font-weight: bold;
+    color: #888; /* subtle gray */
+    flex-shrink: 0; /* prevent squishing */
+
+    /*border-right: 1px solid #444; !* vertical separator *!*/
+    /*padding-right: 5px;*/
+}
+
+.history-entry .increment {
+    margin-left: 10px;
+}
+
+/* Separator */
+.history-entry .separator {
+    width: 1px;
+    background: #444;
+    margin: 2px 5px;
+    height: auto; /* make it fill the container */
+    align-self: stretch; /* ensures full height of flex container */
+}
+
+.entry-content .contribution {
+    font-weight: 600;
+    color: #f0f0f0; /* bright, main action */
+    font-size: 0.8rem;
+}
+
+.entry-content .increment {
+    color: #aaa; /* muted */
+    font-size: 0.8rem;
+}
+
+.entry-content .state {
+    color: #bbb; /* subtle but readable */
+    font-size: 0.8rem;
+    text-align: right;
+}
+
+.entry-content .timestamp {
+    color: #777; /* muted metadata */
+    font-size: 0.75rem;
+    text-align: right;
+}
+
+.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    color: #aaa;
+    animation: bounce 1s infinite;
+}
+
+.loading.hidden {
+    display: none;
+}
+
+.spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #666;
+    border-top: 2px solid #f1f1f1;
+    border-radius: 50%;
+    margin-right: 8px;
+    animation: spin 0.8s linear infinite;
+}
+
+/* animations */
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-4px);
+    }
 }

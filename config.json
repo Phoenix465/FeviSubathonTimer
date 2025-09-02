@@ -18,7 +18,8 @@
         "chzzk": 0.1,
 
         "system_adjustment_points": 180,
-        "system_adjustment_seconds": 1
+        "system_adjustment_seconds": 1,
+        "rollback": 0
     },
     "obsws_settings": {
         "port": 4455,
