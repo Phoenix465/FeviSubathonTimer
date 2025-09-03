@@ -1,5 +1,6 @@
 {
     "version": "1.0.0",
+    "timer_start": 3600,
     "port": 5050,
     "contribution_map_seconds": {
         "__info": "All values are in seconds with points being allocated per 180 seconds (3 minutes)",
@@ -18,6 +19,7 @@
         "afreeca": 2,
         "chzzk": 0.1,
 
+        "__info2": "Do not touch the values below unless you know what you are doing",
         "system_adjustment_points": 180,
         "system_adjustment_seconds": 1,
         "rollback": 0,
@@ -26,6 +28,6 @@
     },
     "obsws_settings": {
         "port": 4455,
-        "password": "password"
+        "password": "XXXX"
     }
 }

@@ -23,15 +23,17 @@ RECONNECT_DELAY = 3
 CONTRIBUTION_CATEGORIES = ["twitch", "stream_elements", "youtube", "afreeca", "chzzk", "system", "rollback", "shutdown",
                            "autosave"]
 
-# Variables
-points_total = 20
-subathon_timer = timer.Timer(100)
-history_log = history_logger.HistoryLogger()
-already_shutdown_saved = False
 
 # Load Configs
 with open("config.json", "r") as f:
     config = json.load(f)
+
+
+# Variables
+points_total = 20
+subathon_timer = timer.Timer(config["timer_start"])
+history_log = history_logger.HistoryLogger()
+already_shutdown_saved = False
 
 # Flask app
 socketio = SocketIO()
