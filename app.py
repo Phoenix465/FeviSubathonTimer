@@ -406,4 +406,4 @@ if __name__ == "__main__":
 
                 print("Loaded autosave state:", state)
 
-    socketio.run(app, debug=True, allow_unsafe_werkzeug=True)
+    socketio.run(app, port=config["port"], debug=False, allow_unsafe_werkzeug=True)

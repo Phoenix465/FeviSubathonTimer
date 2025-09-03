@@ -1,5 +1,6 @@
 {
     "version": "1.0.0",
+    "port": 5050,
     "contribution_map_seconds": {
         "__info": "All values are in seconds with points being allocated per 180 seconds (3 minutes)",
         "twitch_t1": 180,
