@@ -2,6 +2,8 @@
 
 A professional, easy-to-use Subathon Timer for [feviknight](https://www.twitch.tv/feviknight) using OBS Studio. This tool helps manage subathon events, automatically updating your stream overlay but requires manual inputs for contributions (twitch, youtube, chzzk, afreeca, streamelements).
 
+### Important: At the end of streams, remember to **PAUSE** the timer otherwise the system will "catch-up" and treat it as if it was on the entire time 
+
 ## Features
 - Real-time subathon timer with customizable settings
 - OBS Studio integration for automatic overlay updates
