@@ -19,7 +19,9 @@
 
         "system_adjustment_points": 180,
         "system_adjustment_seconds": 1,
-        "rollback": 0
+        "rollback": 0,
+        "autosave": 0,
+        "shutdown": 0
     },
     "obsws_settings": {
         "port": 4455,

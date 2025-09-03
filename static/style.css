@@ -113,6 +113,7 @@ body {
     margin-left: -10px !important;
     margin-right: 2px !important;
     padding-left: 5px; /* adjust as needed */
+    padding-right: 10px !important;
     /*padding-bottom: 2.5rem;   !* space so last item isn’t hidden *!*/
     /*margin-bottom: 2.5rem !important;   !* space so last item isn’t hidden *!*/
 
@@ -164,6 +165,15 @@ body {
     background: #2C2F48;
     border-left: 4px solid #FFD93D;
 }
+
+.history-entry.contribution.shutdown {
+    border-left: 4px solid #f1940d;
+}
+
+.history-entry.contribution.autosave {
+    border-left: 4px solid #b4ea11;
+}
+
 
 .history-entry.contribution.twitch {
     background: #2C2F48;

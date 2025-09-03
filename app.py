@@ -9,6 +9,10 @@ import json
 from math import floor
 import obsws_python as obs
 import obsws_python.error
+import atexit
+import signal
+import sys
+import tempfile
 
 import history_logger
 import timer
@@ -16,12 +20,14 @@ import timer
 # Constants
 VERSION = "1.0.0"
 RECONNECT_DELAY = 3
-CONTRIBUTION_CATEGORIES = ["twitch", "stream_elements", "youtube", "afreeca", "chzzk", "system", "rollback"]
+CONTRIBUTION_CATEGORIES = ["twitch", "stream_elements", "youtube", "afreeca", "chzzk", "system", "rollback", "shutdown",
+                           "autosave"]
 
 # Variables
 points_total = 20
 subathon_timer = timer.Timer(100)
 history_log = history_logger.HistoryLogger()
+already_shutdown_saved = False
 
 # Load Configs
 with open("config.json", "r") as f:
@@ -61,6 +67,56 @@ def convert_history_log_for_client(log: dict) -> dict:
     return current_log
 
 
+def atomic_save_state(state, filename="autosave.json"):
+    fd, tmp = tempfile.mkstemp()
+    try:
+        with os.fdopen(fd, "w") as f:
+            json.dump(state, f)
+        os.replace(tmp, filename)  # atomic on most OSes
+    finally:
+        if os.path.exists(tmp):
+            os.remove(tmp)
+
+
+def save_state():
+    global already_shutdown_saved
+    if already_shutdown_saved:
+        print("Already save-shutting down so skipping save")
+        return
+    already_shutdown_saved = True
+
+    state = {"timestamp": time.time(), "points": points_total, "seconds": subathon_timer.get_time_left(), "paused": subathon_timer.paused}
+    atomic_save_state(state)
+    print("State saved:", state)
+
+    # Attempt to push to history log
+    shutdown_log = history_log.log_event({
+        "timestamp": time.time(),
+        "contribution_id": "shutdown",
+        "quantity": 1,
+        "seconds_added": 0,
+        "points_added": 0,
+        "seconds_total_post": subathon_timer.get_time_left(),
+        "points_total_post": points_total,
+        "paused": subathon_timer.paused
+    })
+
+    shutdown_log = convert_history_log_for_client(shutdown_log)
+
+    socketio.emit("notification_error_event", {
+        "title": "✅ Shutdown Saved",
+        "message": "State saved successfully",
+        "theme_type": "success"
+    })
+
+    socketio.emit("history_event", shutdown_log)
+
+
+def handle_signal(signum, frame):
+    save_state()
+    sys.exit(0)
+
+
 # Routes
 @app.route("/")
 def index():
@@ -78,7 +134,7 @@ def get_history():
     if start < 0 or start > end or end >= len(history_log.logs):
         return {"error": "Start must be >= 0 and start <= end and end < total_history_length"}, 400
 
-    logs = history_log.logs[start:end+1]
+    logs = history_log.logs[start:end + 1]
     converted_logs = [convert_history_log_for_client(log) for log in logs]
 
     return {"logs": converted_logs, "total": len(history_log.logs)}, 200
@@ -87,7 +143,6 @@ def get_history():
 @app.route("/api/v1/history-length", methods=["GET"])
 def get_history_length():
     return {"total": len(history_log.logs)}, 200
-
 
 
 # SocketIO Events
@@ -198,7 +253,6 @@ def request_rollback(data: dict):
     })
 
 
-
 @socketio.on("perform_rollback")
 def perform_rollback(data: dict):
     global points_total
@@ -250,7 +304,6 @@ def perform_rollback(data: dict):
     poll_subathon_info()
 
 
-
 # Background Thread
 def obs_updater():
     obsws_settings = config["obsws_settings"]
@@ -274,9 +327,9 @@ def obs_updater():
     print("[SYSTEM] OBS UPDATER THREAD MADE")
     client = connect_obs()
     while True:
-        time.sleep(1 / 60)
-        points_current += (points_total - points_current) * 0.08
-        seconds_current += (subathon_timer.get_time_left() - seconds_current) * 0.08
+        time.sleep(1 / 30)
+        points_current += (points_total - points_current) * 0.1
+        seconds_current += (subathon_timer.get_time_left() - seconds_current) * 0.1
 
         try:
 
@@ -295,10 +348,10 @@ def obs_updater():
             # print("Setting", str(round(points_current)), subathon_timer.format_time(subathon_timer.get_time_left()))
         except obs.error.OBSSDKRequestError as e:
             print(f"OBS Request Error: {e}")
-            emit("notification_error_event", {
+            socketio.emit("notification_error_event", {
                 "title": "❌ OBS Text Labels Not Found",
                 "message": f"Ensure that you have two text (GDI+) sources named `FeviSubathonTimer-Points` and `FeviSubathonTimer-Timer`",
-                "theme_type": "success"
+                "theme_type": "danger"
             })
             time.sleep(3)
         except Exception as e:
@@ -307,10 +360,50 @@ def obs_updater():
             client = connect_obs()  # Reconnect
 
 
+def auto_saver():
+    while True:
+        time.sleep(60)
+        state = {"timestamp": time.time(), "points": points_total, "seconds": subathon_timer.get_time_left(), "paused": subathon_timer.paused}
+        atomic_save_state(state)
+
+        socketio.emit("notification_error_event", {
+            "title": "✅ Autosaved",
+            "message": "State autosaved successfully",
+            "theme_type": "success"
+        })
+
+
 # Run the app
 if __name__ == "__main__":
     if os.environ.get("WERKZEUG_RUN_MAIN") == "true":
+        atexit.register(save_state)
+        signal.signal(signal.SIGTERM, handle_signal)
+        signal.signal(signal.SIGINT, handle_signal)
+
         thread = threading.Thread(target=obs_updater, daemon=True)
         thread.start()
+
+        thread2 = threading.Thread(target=auto_saver, daemon=True)
+        thread2.start()
+
+        # Load autosave state if exists
+        if os.path.exists("autosave.json"):
+            try:
+                with open("autosave.json", "r") as f:
+                    state = json.load(f)
+                    timestamp = state["timestamp"]
+                    seconds = state["seconds"]
+                    points = state["points"]
+                    paused = state["paused"]
+            except Exception as e:
+                print("Failed to load autosave state:", e)
+            else:
+                if paused:
+                    subathon_timer.set_time(seconds)
+                    subathon_timer.toggle_pause()
+                else:
+                    subathon_timer.set_time(max(0, seconds - (time.time() - timestamp)))
+
+                print("Loaded autosave state:", state)
 
     socketio.run(app, debug=True, allow_unsafe_werkzeug=True)

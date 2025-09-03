@@ -78,8 +78,9 @@ function showError(title, message, theme_type) {
 function showNotification(innerHTML) {
     // Create toast element
     const toastEl = document.createElement('div');
-    toastEl.className = "toast col-4 shadow-lg border-0rounded-3 mb-3 overflow-hidden";
-    toastEl.style.maxWidth = "200px"
+    toastEl.className = "toast shadow-lg border-0rounded-3 mb-3 overflow-hidden";
+    toastEl.style.maxWidth = "calc(25vw - 2rem)"
+    toastEl.style.width = "calc(25vw - 2rem)"
     toastEl.setAttribute("role", "alert");
     toastEl.setAttribute("aria-live", "assertive");
     toastEl.setAttribute("aria-atomic", "true");
