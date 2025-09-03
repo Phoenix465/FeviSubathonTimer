@@ -328,6 +328,11 @@ def obs_updater():
     client = connect_obs()
     while True:
         time.sleep(1 / 30)
+        if subathon_timer.paused:
+            points_current = points_total
+            seconds_current = subathon_timer.get_time_left()
+            time.sleep(1)
+
         points_current += (points_total - points_current) * 0.1
         seconds_current += (subathon_timer.get_time_left() - seconds_current) * 0.1
 
@@ -375,7 +380,7 @@ def auto_saver():
 
 # Run the app
 if __name__ == "__main__":
-    if os.environ.get("WERKZEUG_RUN_MAIN") == "true":
+    if os.environ.get("WERKZEUG_RUN_MAIN") == "true" or True:
         atexit.register(save_state)
         signal.signal(signal.SIGTERM, handle_signal)
         signal.signal(signal.SIGINT, handle_signal)
